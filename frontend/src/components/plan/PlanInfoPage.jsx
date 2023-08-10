@@ -9,7 +9,9 @@ const PlanInfoPage = () => {
     const [active, setActive] = useState(true)
 
     useEffect(()=>{
-        getUserData();
+       if(planSelected === -1){
+           getUserData();
+       }
 
     },[planSelected])
 
@@ -37,10 +39,11 @@ const PlanInfoPage = () => {
         <div className="card-body">
             <div className="type">{product.name}</div>
             <div className="devices">
-                { planSelected!==-1 &&
+                {planSelected!==-1 && 
                     plans[planSelected].devices.map((val,indx)=>(
-                        <span key={indx}>{val} + </span>
-                    ))}
+                    <span key={indx}>{val} + </span>
+                ))
+                }
                 <span>more</span>
             </div>
             <h1 className="pricing">

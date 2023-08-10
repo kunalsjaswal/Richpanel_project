@@ -46,41 +46,10 @@ const StateFile = (props) => {
 
     // current plan info 
     const [product,setProduct] = useState({})
-
-    const handleSetActive = async()=>{
-        setIsLoading(true)
-        const response = await fetch(`http://localhost:5000/activate-subscription/${localStorage.getItem("token")}`,{
-            method:"PUT",
-            headers:{
-                "Content-Type":"application/json",
-            },
-            body:JSON.stringify({date:product.date,price:product.price,type:product.name,time:subPeriod?"Yearly":"Monthly",plan:planSelected})
-        })
-        const json = await response.json();
-        console.log(json)
-        
-        setIsLoading(false)
-
-    }
-
-    const handleCancel = async()=>{
-        setIsLoading(true)
-
-        const response = await fetch(`http://localhost:5000/cancel-subscription/${localStorage.getItem("token")}`,{
-            method:"PUT",
-            headers:{
-                "Content-Type":"application/json",
-            },
-        })
-        const json = await response.json();
-        setIsLoading(false)
-
-    }
-    
     
     const getUserData = async()=>{
         setIsLoading(true)
-        const response = await fetch(`http://localhost:5000/getuserData/${localStorage.getItem("token")}`,{
+        const response = await fetch(`https://subscriptionapi.onrender.com/getuserData/${localStorage.getItem("token")}`,{
             method:"GET",
             headers:{
                 "Content-Type":"application/json",
@@ -98,6 +67,37 @@ const StateFile = (props) => {
 
 
     }
+    const handleSetActive = async()=>{
+        setIsLoading(true)
+        const response = await fetch(`https://subscriptionapi.onrender.com/activate-subscription/${localStorage.getItem("token")}`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify({date:product.date,price:product.price,type:product.name,time:subPeriod?"Yearly":"Monthly",plan:planSelected})
+        })
+        const json = await response.json();
+        // setPlanSelected()
+        setIsLoading(false)
+
+    }
+
+    const handleCancel = async()=>{
+        setIsLoading(true)
+
+        const response = await fetch(`https://subscriptionapi.onrender.com/cancel-subscription/${localStorage.getItem("token")}`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json",
+            },
+        })
+        const json = await response.json();
+        setIsLoading(false)
+
+    }
+    
+    
+    
     return (
         <contextStore.Provider 
             value={{
