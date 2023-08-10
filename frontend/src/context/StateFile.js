@@ -79,11 +79,6 @@ const StateFile = (props) => {
 
         const json = await response.json();
         const date = Date()
-        setProduct({
-            name:plans[json.subscription].type,
-            price:plans[json.subscription].price * (subPeriod?10:1),
-            date: date,
-        })
     }
     return (
         <contextStore.Provider 
