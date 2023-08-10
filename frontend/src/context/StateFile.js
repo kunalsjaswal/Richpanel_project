@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import contextStore from './ContextFile'
-const api = "https://subscriptionapi.onrender.com" 
+
 const StateFile = (props) => {
 
     // subscription period
@@ -48,29 +48,39 @@ const StateFile = (props) => {
     const [product,setProduct] = useState({})
 
     const handleSetActive = async()=>{
-        console.log("inside block")
-        const response = await fetch(`${api}/activate-subscription/${localStorage.getItem("token")}`,{
+        setIsLoading(true)
+        const response = await fetch(`http://localhost:5000/activate-subscription/${localStorage.getItem("token")}`,{
             method:"PUT",
             headers:{
                 "Content-Type":"application/json",
             },
-            body:JSON.stringify({plan:planSelected})
+            body:JSON.stringify({date:product.date,price:product.price,type:product.name,time:subPeriod?"Yearly":"Monthly",plan:planSelected})
         })
         const json = await response.json();
+        console.log(json)
+        
+        setIsLoading(false)
+
     }
 
     const handleCancel = async()=>{
-        const response = await fetch(`${api}/cancel-subscription/${localStorage.getItem("token")}`,{
+        setIsLoading(true)
+
+        const response = await fetch(`http://localhost:5000/cancel-subscription/${localStorage.getItem("token")}`,{
             method:"PUT",
             headers:{
                 "Content-Type":"application/json",
             },
         })
         const json = await response.json();
+        setIsLoading(false)
+
     }
     
+    
     const getUserData = async()=>{
-        const response = await fetch(`${api}/getuserData/${localStorage.getItem("token")}`,{
+        setIsLoading(true)
+        const response = await fetch(`http://localhost:5000/getuserData/${localStorage.getItem("token")}`,{
             method:"GET",
             headers:{
                 "Content-Type":"application/json",
@@ -78,7 +88,15 @@ const StateFile = (props) => {
         })
 
         const json = await response.json();
-        const date = Date()
+        const {date,price,type,time,plan} = json
+        
+        setProduct({name:type,price:price,date:date});
+        setPlanSelected(plan)
+        if(time === 'Yearly') setSubPeriod(true)      
+        
+        setIsLoading(false)
+
+
     }
     return (
         <contextStore.Provider 

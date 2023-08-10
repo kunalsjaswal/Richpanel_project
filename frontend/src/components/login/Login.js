@@ -26,7 +26,7 @@ const LoginPage = () => {
     ev.preventDefault();
     setIsLoading(true);
 
-    const response  = await fetch("https://subscriptionapi.onrender.com/user-login",{
+    const response  = await fetch("http://localhost:5000/user-login",{
       method:"POST",
       headers:{
         "Content-Type":"application/json",
@@ -43,7 +43,11 @@ const LoginPage = () => {
       localStorage.setItem('username',json.token.username)
       localStorage.setItem('token',json.token.id)
 
-      navigate('/available-plans',{replace:true})
+      if(json.token.status){
+        navigate('/plan-info',{replace:true})
+      }else{
+        navigate('/available-plans',{replace:true})
+      }
     }else{
       seterrorMessage({status:true,color:"red",message:json.error})
     }

@@ -27,7 +27,7 @@ const SignupPage = () => {
       ev.preventDefault();
       setIsLoading(true);
 
-      const response = await fetch("https://subscriptionapi.onrender.com/user-registration",{
+      const response = await fetch("http://localhost:5000/user-registration",{
         method:"POST",
         headers:{
           "Content-Type":"application/json",

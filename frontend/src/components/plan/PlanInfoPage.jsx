@@ -7,13 +7,14 @@ const PlanInfoPage = () => {
 
     const {subPeriod, plans, product,handleCancel,planSelected,getUserData, setIsLoading} = useContext(contextStore)
     const [active, setActive] = useState(true)
+
     useEffect(()=>{
         getUserData();
-    },[])
+
+    },[planSelected])
 
     const handleCancelBtn = async(req,res)=>{
         setIsLoading(true)
-
         handleCancel()
         setActive(false)
         setIsLoading(false)
@@ -36,9 +37,10 @@ const PlanInfoPage = () => {
         <div className="card-body">
             <div className="type">{product.name}</div>
             <div className="devices">
-                {plans[planSelected].devices.map((val,indx)=>(
-                    <span key={indx}>{val} + </span>
-                ))}
+                { planSelected!==-1 &&
+                    plans[planSelected].devices.map((val,indx)=>(
+                        <span key={indx}>{val} + </span>
+                    ))}
                 <span>more</span>
             </div>
             <h1 className="pricing">
@@ -51,8 +53,8 @@ const PlanInfoPage = () => {
 
         <div className="card-footer">
             {active ?
-                `Your subscription has started on ${product.date.substring(4,16)} and will auto renew on ${product.date.substring(4,10)}, 2024.`:
-                ` your subscription was cancelled and you will loose access to services on ${product.date.substring(4,10)}, 2024.`
+                `Your subscription has started on ${ planSelected!==-1 && product.date.substring(4,16)} and will auto renew on ${ planSelected!==-1 && product.date.substring(4,10)}, 2024.`:
+                ` your subscription was cancelled and you will loose access to services on ${planSelected!==-1 && product.date.substring(4,10)}, 2024.`
             }
             
         </div>

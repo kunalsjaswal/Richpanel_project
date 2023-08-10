@@ -50,7 +50,7 @@ const PaymentForm = () => {
         if(!error) {
             try {
                 const {id} = paymentMethod
-                const response = await fetch("https://subscriptionapi.onrender.com/payment-gateway",{
+                const response = await fetch("http://localhost:5000/payment-gateway",{
                     method:"POST",
                     headers:{
                         "Content-Type":"application/json",
