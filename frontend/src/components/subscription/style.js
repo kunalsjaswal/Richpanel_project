@@ -5,10 +5,25 @@ export const PlanDiv = styled.div`
     position: fixed;
     width: 100%;
     height: 100%;
+    user-select: none;
+
+    .logout{
+        border: 2px solid rgb(27, 93, 169);
+        border-radius: 5px;
+        padding: 0.5% 1%;
+        position: absolute;
+        background-color: #ffffff;
+        color: rgb(27, 93, 169);
+        right: 1%;
+        top: 1%;
+        cursor:pointer;
+        font-weight: bold;
+        
+    }
     h1{
         text-align: center;
         margin-top: 3%;
-        color: #2e2e2e;
+        color: rgb(17, 70, 131);
     }
 
     .grid-box{
@@ -114,6 +129,10 @@ export const PlanDiv = styled.div`
         margin-top: 34%;
     }
 
+    .error{
+        text-align: center;
+        color: red;
+    }
     .next-btn{
         width: 20%;
         margin-top: 2%;
